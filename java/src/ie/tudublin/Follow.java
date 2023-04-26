@@ -5,8 +5,8 @@ package ie.tudublin;
  * how many times it follows after the previous word
  */
 public class Follow {
-    String word;
-    int count; // How many times the word followed after
+    private String word;
+    private int count; // How many times the word followed after
 
     public String getWord() {
         return word;
