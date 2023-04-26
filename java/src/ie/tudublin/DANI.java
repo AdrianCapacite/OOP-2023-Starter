@@ -26,7 +26,7 @@ public class DANI extends PApplet {
 	public void setup() {
 		colorMode(HSB);
 
-		loadFile("small.txt");
+		loadFile("shakespere.txt");
 		updateSonnet();
 
 	}
@@ -145,23 +145,25 @@ public class DANI extends PApplet {
 			// If new line, pick random word except for new line
 			// Then add it to retString and set is as prevWord
 			if (prevWord == null) {
-				Word word = model.get(round(random(0, model.size())));
-				retString += word.getWord();
+				Word word = model.get(round(random(0, model.size() - 1)));
+				retString += word.getWord() + " ";
 				prevWord = word;
 			} else {
 				Follow followWord = prevWord.nextFollow();
 				// BUG: It goes in an infinite loop here.... It would work otherwise
-				if (!followWord.getWord().equals("\n")) {
+				// If it is new line, increment lines
+				if (followWord.getWord().equals("\n")) {
 					// prevWord = findWord(followWord.getWord());
 					prevWord = null;
 					currentLines++;
+				} else {
+					prevWord = findWord(followWord.getWord());
 				}
-				retString += followWord.getWord();
+				retString += followWord.getWord() + " ";
 
 			}
 
 		}
-		System.out.println("Created");
 
 		return retString;
 	}
@@ -175,14 +177,15 @@ public class DANI extends PApplet {
 		background(0);
 		pushMatrix();
 
-		translate(width / 2, height / 2);
+		// translate(width / 2, height / 2);
 
 		fill(255);
 		noStroke();
 
 		textAlign(CENTER, CENTER);
 		textSize(TEXT_SIZE);
-		text(sonnet, 0f, 0f);
+		text(sonnet, 0, 0, width, height);
+		System.out.println(sonnet);
 
 		popMatrix();
 	}
