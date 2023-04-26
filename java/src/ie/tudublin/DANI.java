@@ -2,12 +2,18 @@ package ie.tudublin;
 
 import java.util.ArrayList;
 
+import javax.xml.crypto.dsig.Transform;
+
 import processing.core.PApplet;
 
 // ! NOTE: To compare strings use String.equals(String)
 public class DANI extends PApplet {
 
-	String[] sonnet;
+	private static final float TEXT_SIZE = 20;
+
+	private static final int SONNET_LENGTH = 14;
+
+	String sonnet;
 	ArrayList<Word> model;
 	float off = 0;
 
@@ -21,15 +27,17 @@ public class DANI extends PApplet {
 		colorMode(HSB);
 
 		loadFile("small.txt");
+		updateSonnet();
 
 	}
 
 	public void keyPressed() {
-		// TODO: Generate space to create new sonnet
+		if (key == ' ') {
+			updateSonnet();
+		}
 	}
 
 	public void draw() {
-		background(0);
 		fill(255);
 		noStroke();
 		textSize(20);
@@ -80,7 +88,7 @@ public class DANI extends PApplet {
 				findWord(prevWord).addFollows(word);
 				// Word modelWord = findWord(prevWord);
 				// if (modelWord.findFollow(word) == null) {
-				// 	modelWord.addFollows(word);
+				// modelWord.addFollows(word);
 				// }
 			}
 			prevWord = word;
@@ -122,18 +130,57 @@ public class DANI extends PApplet {
 	}
 
 	/**
-	 * Returns a 14 line sonnet
+	 * Returns a sonnet of n lines
 	 *
+	 * @param lines
 	 * @return
 	 */
-	public String[] writeSonnet() {
-		return null;
+	public String writeSonnet(int lines) {
+		int currentLines = 0;
+		String retString = "";
+		Word prevWord = null;
+
+		// Keep asking for words,
+		while (currentLines < lines) {
+			// If new line, pick random word except for new line
+			// Then add it to retString and set is as prevWord
+			if (prevWord == null) {
+				Word word = model.get(round(random(0, model.size())));
+				retString += word.getWord();
+				prevWord = word;
+			} else {
+				Follow followWord = prevWord.nextFollow();
+				while (followWord.getWord().equals("\n")) followWord = prevWord.nextFollow();
+				retString += followWord.getWord();
+				prevWord = findWord(followWord.getWord());
+
+			}
+			if (prevWord.getWord().equals("\n")) currentLines++;
+
+		}
+		System.out.println("Created");
+
+		return retString;
 	}
 
 	/**
 	 * Calls writeSonnet then displays it to screen and console
 	 */
-	public void createSonnet() {
+	public void updateSonnet() {
+		sonnet = writeSonnet(SONNET_LENGTH);
 
+		background(0);
+		pushMatrix();
+
+		translate(width / 2, height / 2);
+
+		fill(255);
+		noStroke();
+
+		textAlign(CENTER, CENTER);
+		textSize(TEXT_SIZE);
+		text(sonnet, 0f, 0f);
+
+		popMatrix();
 	}
 }

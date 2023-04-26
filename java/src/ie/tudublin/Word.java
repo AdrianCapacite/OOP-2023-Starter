@@ -1,6 +1,9 @@
 package ie.tudublin;
 
 import java.util.ArrayList;
+import java.util.Random;
+
+import processing.core.PApplet;
 
 /**
  * Class represents a word in the model, it contains an ArrayList of what words
@@ -62,6 +65,14 @@ public class Word {
             }
         }
         return null;
+    }
+
+    /**
+     * Returns a random Follow word
+     * @return
+     */
+    public Follow nextFollow() {
+        return follows.get((int) Math.round(Math.random() * (follows.size() - 1)));
     }
 
 }
