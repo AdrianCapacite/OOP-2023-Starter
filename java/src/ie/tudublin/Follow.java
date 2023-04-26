@@ -33,7 +33,8 @@ public class Follow {
      */
     @Override
     public String toString() {
-        return word + "(" + count + ")";
+        String wordOut = word.equals("\n") ? "\\n" : word;
+        return wordOut + "(" + count + ")";
     }
 
 }

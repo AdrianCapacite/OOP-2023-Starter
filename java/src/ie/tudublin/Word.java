@@ -42,7 +42,8 @@ public class Word {
      */
     @Override
     public String toString() {
-        String retString = word + ":";
+        String wordOut = word.equals("\n") ? "\\n" : word;
+        String retString = wordOut + ":";
         for (Follow follow : follows) {
             retString += " " + follow.toString();
         }

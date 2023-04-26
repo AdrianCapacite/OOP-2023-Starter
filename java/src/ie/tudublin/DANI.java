@@ -59,6 +59,7 @@ public class DANI extends PApplet {
 			for (String word : line.split(" ")) {
 				words.add(word.toLowerCase());
 			}
+			words.add("\n");
 		}
 		System.out.println(words);
 
