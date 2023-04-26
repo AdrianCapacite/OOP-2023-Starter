@@ -18,6 +18,20 @@ public class Word {
         return follows;
     }
 
+    /**
+     * Adds Follow to list of Follows
+     * If it alredy exists, then increment its count
+     */
+    public void addFollows(String word) {
+        Follow follow = findFollow(word);
+        if (follow == null) {
+            Follow newFollow = new Follow(word, 1);
+            follows.add(newFollow);
+        } else {
+            follow.incCount();
+        }
+    }
+
     public Word(String word, ArrayList<Follow> follows) {
         this.word = word;
         this.follows = follows;
@@ -42,7 +56,7 @@ public class Word {
      */
     public Follow findFollow(String word) {
         for (Follow follow : follows) {
-            if (follow.getWord() == word) {
+            if (follow.getWord().equals(word)) {
                 return follow;
             }
         }

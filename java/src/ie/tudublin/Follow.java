@@ -16,6 +16,13 @@ public class Follow {
         return count;
     }
 
+    /**
+     * Increments count
+     */
+    public void incCount() {
+        count++;
+    }
+
     public Follow(String word, int count) {
         this.word = word;
         this.count = count;
