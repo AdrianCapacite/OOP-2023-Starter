@@ -7,23 +7,15 @@ import java.util.ArrayList;
  * follow after this word.
  */
 public class Word {
-    String word;
-    ArrayList<Follow> follows;
+    private String word;
+    private ArrayList<Follow> follows;
 
     public String getWord() {
         return word;
     }
 
-    public void setWord(String word) {
-        this.word = word;
-    }
-
     public ArrayList<Follow> getFollows() {
         return follows;
-    }
-
-    public void setFollows(ArrayList<Follow> follows) {
-        this.follows = follows;
     }
 
     public Word(String word, ArrayList<Follow> follows) {
@@ -36,16 +28,24 @@ public class Word {
      */
     @Override
     public String toString() {
-        // TODO: Implement loop through array list
-        return "Word [word=" + word + ", follows=" + follows + "]";
+        String retString = word + ":";
+        for (Follow follow : follows) {
+            retString += " " + follow.toString();
+        }
+        return retString;
     }
 
     /**
      * Returns a Follow word that matches the word
+     *
      * @return
      */
     public Follow findFollow(String word) {
-        // TODO: Implement Loop through array list
+        for (Follow follow : follows) {
+            if (follow.getWord() == word) {
+                return follow;
+            }
+        }
         return null;
     }
 
