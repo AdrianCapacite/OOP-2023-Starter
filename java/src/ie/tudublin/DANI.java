@@ -150,12 +150,15 @@ public class DANI extends PApplet {
 				prevWord = word;
 			} else {
 				Follow followWord = prevWord.nextFollow();
-				while (followWord.getWord().equals("\n")) followWord = prevWord.nextFollow();
+				// BUG: It goes in an infinite loop here.... It would work otherwise
+				if (!followWord.getWord().equals("\n")) {
+					// prevWord = findWord(followWord.getWord());
+					prevWord = null;
+					currentLines++;
+				}
 				retString += followWord.getWord();
-				prevWord = findWord(followWord.getWord());
 
 			}
-			if (prevWord.getWord().equals("\n")) currentLines++;
 
 		}
 		System.out.println("Created");
